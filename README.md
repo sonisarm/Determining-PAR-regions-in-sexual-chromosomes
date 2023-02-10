@@ -86,8 +86,7 @@ gatk SelectVariants \
      	--exclude-non-variants
 
 # Remove masked regions
-bcftools view -O z -o ${intermediate_VCF3} -R ${maked_regions} \
-	${intermediate_VCF2}
+bcftools view -O z -o ${intermediate_VCF3} -R ${maked_regions} ${intermediate_VCF2}
 	
 # Filter for read depth
 gatk VariantFiltration \
