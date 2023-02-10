@@ -2,7 +2,9 @@
 
 Author: Sonia Sarmiento
 
-### This repository aims at defining PAR and non-PAR regions of sexual chromosomes. I used mainly a HPC cluster with bash scripts and R code at the end for analysis and plotting.
+### Description: This repository aims at defining PAR and non-PAR regions of sexual chromosomes. 
+
+#### Coding: I used mainly a HPC cluster with bash scripts and R code at the end for analysis and plotting.
 
 ## Introduction
 Welcome to my repository for identifying PAR (Pseudoautosomal Regions) and non-PAR regions of sexual chromosomes!
