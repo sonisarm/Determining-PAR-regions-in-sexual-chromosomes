@@ -46,7 +46,7 @@ gatk CombineGVCFs \
          -R ${ref} \
          -V GVCF_files.list \
          -L Z_ss.list \
-         -O ${intermediate_file}
+         -O ${intermediate_GVCF}
          
 gatk --java-options "-Djava.io.tmpdir=${myDIR}/tmp/" GenotypeGVCFs -R ${ref} -V ${intermediate_file} -O ${output} --tmp-dir ${myDIR}/tmp/
 
@@ -55,10 +55,39 @@ gatk --java-options "-Djava.io.tmpdir=${myDIR}/tmp/" GenotypeGVCFs -R ${ref} -V 
 
 
 ### Step 3: Filtering VCFs
+Filter VCF according to GATK best practices.
+* Input:
+1) ```${ref}```  --> Reference genome (e.g. from NCBI)
+2) ```${input_VCF}```  --> VCF (output of previous step)
+3) ```${maked_regions}``` --> List of maked regions per chromosome 
+* Script:
+```bash
+#Techfilters SNPs selection
+gatk VariantFiltration \
+     	-R ${ref} \
+     	-V ${input_VCF} \
+     	-O ${intermediate_VCF}.vcf.gz \
+     	--filter-expression "QD < 2.0" --filter-name "QD2" \
+     	--filter-expression "FS > 60.0" --filter-name "FS60" \
+     	--filter-expression "SOR > 3.0" --filter-name "SOR3" \
+     	--filter-expression "ReadPosRankSum < -8.0" --filter-name "RPRS-8" \
+     	--filter-expression "MQRankSum < -12.5" --filter-name "MQRS-12.5" \
+     	--filter-expression "MQ < 40.0" --filter-name "MQ40"
 
-* Input: VCF file ($vcf) and reference genome ($ref)
-* Script: ```1_FilteringVCFs.sh```
-* Output: filtered VCF
+#Subsetting
+gatk SelectVariants \
+     	-R ${ref} \
+     	-V ${intermediate_VCF}.vcf.gz \
+     	-O ${intermediate_VCF2}.vcf.gz \
+     	--exclude-filtered true \
+     	--exclude-non-variants
+
+# Remove masked regions
+bcftools view -O z -o ${output_BCF}.bcf.gz -R ${maked_regions} \
+	${intermediate_VCF2}.vcf.gz
+   
+`````
+* Output: Filtered BCF with masked regions removed.
 
 **NOTE**: when filtering for sequencing depth, the haploid individual's lower cutoff has to be at least halved in the sexual chromosome only (e.g. males XY in human, females ZW in birds) 
 
