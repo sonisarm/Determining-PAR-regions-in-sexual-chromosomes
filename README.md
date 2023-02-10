@@ -17,9 +17,9 @@ The workflow includes SNP calling (both with and without ploidy), filtering step
 
 
 * Input: 
-- ref --> Reference genome (e.g. from NCBI)
-- BAMFile --> BAM file from individual
--L interval --> list of chromosomes/scaffolds (one per line)
+1) ref --> Reference genome (e.g. from NCBI)
+2) BAMFile --> BAM file from individual
+3) -L interval --> list of chromosomes/scaffolds (one per line)
 
 * Script: 
 ```bash
