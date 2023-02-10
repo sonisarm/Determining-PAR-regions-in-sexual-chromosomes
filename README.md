@@ -13,20 +13,17 @@ The workflow includes SNP calling (both with and without ploidy), filtering step
 ## Workflow
 
 ### Step 1: SNP Calling
-
-
-
 * Input: 
 1) ```${ref}```  --> Reference genome (e.g. from NCBI)
 2) ```${BAMFile}```  --> BAM file from individual
-3) ```${interval}``` --> list of chromosomes/scaffolds (one per line)
+3) ```Z_ss.list``` --> list of sexual chromosomes/scaffolds (one per line) (e.g. ChrX for humans)
 
 * Script: 
 ```bash
 gatk HaplotypeCaller \
    -R {ref} \
    -I ${BAMFile} \
-   -L ${interval} \
+   -L Z_ss.list \
    --pcr-indel-model NONE \
    -ERC GVCF \
    --sample-ploidy 1 \ #INCLUDE THIS LINE CODE TO PRECISE THE CHROMOSOME IS HAPLOID. 
@@ -37,8 +34,24 @@ Run this script for the sexual chromosome one time specifying for haploidy vs wi
 * Output: GVCF containing called SNPs.
 
 ### Step 2: Combining GVCFs and genotype
+* Input: 
+1) ```${ref}```  --> Reference genome (e.g. from NCBI)
+2) ```GVCF_files.list```  --> List of GVCFs to combine (one per sample).
+3) ```Z_ss.list``` --> list of sexual chromosomes/scaffolds (one per line) (e.g. ChrX for humans)
 
+* Script:
+```bash
+# Combine GVCFs
+gatk CombineGVCFs \
+         -R ${ref} \
+         -V GVCF_files.list \
+         -L Z_ss.list \
+         -O ${intermediate_file}
+         
+gatk --java-options "-Djava.io.tmpdir=${myDIR}/tmp/" GenotypeGVCFs -R ${ref} -V ${intermediate_file} -O ${output} --tmp-dir ${myDIR}/tmp/
 
+````
+* Output: One VCF with called SNPs for all samples
 
 
 ### Step 3: Filtering VCFs
