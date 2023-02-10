@@ -47,11 +47,12 @@ gatk CombineGVCFs \
          -V GVCF_files.list \
          -L Z_ss.list \
          -O ${intermediate_GVCF}
-         
+  
+# Perform joint genotyping on one or more samples pre-called with HaplotypeCaller
 gatk --java-options "-Djava.io.tmpdir=${myDIR}/tmp/" GenotypeGVCFs -R ${ref} -V ${intermediate_file} -O ${output} --tmp-dir ${myDIR}/tmp/
 
 ````
-* Output: One VCF with called SNPs for all samples
+* Output: A final VCF in which all samples have been jointly genotyped
 
 
 ### Step 3: Filtering VCFs
