@@ -127,6 +127,7 @@ After obtaining a VCF with read-depth information, we analyse this data in R. Th
 3) List of individuals to analyse
 
 * Script: ```1_Coverage_Analysis.R```
+* 
 This script divides each SNP position for each individual by the specific-coverage of the individual (for the whole genome). 
 
 * Output: Distribution plots of sequencing depth (sexual chr) / coverage (whole genome) per SNP and individual.
