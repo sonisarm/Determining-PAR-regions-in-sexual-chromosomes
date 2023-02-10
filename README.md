@@ -60,8 +60,10 @@ Filter VCF according to GATK best practices.
 * Input:
 1) ```${ref}```  --> Reference genome (e.g. from NCBI)
 2) ```${input_VCF}```  --> VCF (output of previous step)
-3) ```${maked_regions}``` --> List of maked regions per chromosome 
-4) ```${high_cutoff}``` and ```${low_cutoff}``` --> 
+3) ```${maked_regions}``` --> List of maked regions per chromosome
+The mask file should contain the start and end coordinates of each masked region. 
+
+4) ```${high_cutoff}``` and ```${low_cutoff}``` --> Cutt off for sequencing depth filtering. The high cutoff depends on the average sequencing depth (e.g. high cutoff should not be double than the average depth). The lower cutoff depends on the ploidy of the chromosome. 
 
 * Script:
 ```bash
