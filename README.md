@@ -131,6 +131,6 @@ This script divides each SNP position for each individual by the specific-covera
 
 * Output: Distribution plots of sequencing depth (sexual chr) / coverage (whole genome) per SNP and individual.
 
-On the one hand, I expect that the DIPLOID homozygous individual for the sexual chromosome present a distribution of around 1 (e.g.``` ```) . On the other hand, I expect that the distribution for the heterozygous individual follows a bimodal distribution between 0.5 and 1, corresponding to the non-PAR and PAR regions, accordingly. The non-PAR (haploid) region will be 0.5 when divided by the coverage of the whole genome because its haploid. 
+On the one hand, I expect that the DIPLOID homozygous individual for the sexual chromosome present a distribution of around 1 (e.g.```SD_distribution_homozygous_sex.jpg```) . On the other hand, I expect that the distribution for the heterozygous individual follows a bimodal distribution between 0.5 and 1, corresponding to the non-PAR and PAR regions, accordingly. The non-PAR (haploid) region will be 0.5 when divided by the coverage of the whole genome because its haploid. 
 
 
