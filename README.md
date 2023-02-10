@@ -126,7 +126,7 @@ After obtaining a VCF with read-depth information, we analyse this data in R. Th
 2) Coverage of BAM file per individual (TXT file - col1=ind; col2=coverage, col3;sex (or one file per sex))
 3) List of individuals to analyse
 
-* Script:
+* Script: ```1_Coverage_Analysis.R```
 
 * Output: Distribution plots of sequencing depth (sexual chr) / coverage (whole genome) per SNP and individual.
 
