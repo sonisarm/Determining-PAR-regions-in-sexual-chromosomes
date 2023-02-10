@@ -33,7 +33,7 @@ Run this script for the sexual chromosome one time specifying for haploidy vs wi
 
 * Output: GVCF containing called SNPs.
 
-### Step 2: Combining GVCFs and genotype
+### Step 2: Combining GVCFs and joint genotyping.
 * Input: 
 1) ```${ref}```  --> Reference genome (e.g. from NCBI)
 2) ```GVCF_files.list```  --> List of GVCFs to combine (one per sample).
