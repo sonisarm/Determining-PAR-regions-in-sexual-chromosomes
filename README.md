@@ -29,15 +29,19 @@ gatk HaplotypeCaller \
    -L ${interval} \
    --pcr-indel-model NONE \
    -ERC GVCF \
-   --sample-ploidy 1 \ #INCLUDE THIS LINE CODE TO PRECISE THE CHROMOSOME IS HAPLOID
+   --sample-ploidy 1 \ #INCLUDE THIS LINE CODE TO PRECISE THE CHROMOSOME IS HAPLOID. 
    -O ${output}.g.vcf.gz 
 ```
+Run this script for the sexual chromosome one time specifying for haploidy vs without this part of the code. 
+
 * Output: GVCF containing called SNPs.
 
 ### Step 2: Combining GVCFs and genotype
 
-### Step 3: Filtering VCFs
 
+
+
+### Step 3: Filtering VCFs
 
 * Input: VCF file ($vcf) and reference genome ($ref)
 * Script: ```1_FilteringVCFs.sh```
