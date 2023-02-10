@@ -60,13 +60,15 @@ Filter VCF according to GATK best practices.
 1) ```${ref}```  --> Reference genome (e.g. from NCBI)
 2) ```${input_VCF}```  --> VCF (output of previous step)
 3) ```${maked_regions}``` --> List of maked regions per chromosome 
+4) ```${high_cutoff}``` and ```${low_cutoff}``` --> 
+
 * Script:
 ```bash
 #Techfilters SNPs selection
 gatk VariantFiltration \
      	-R ${ref} \
      	-V ${input_VCF} \
-     	-O ${intermediate_VCF}.vcf.gz \
+     	-O ${intermediate_VCF} \
      	--filter-expression "QD < 2.0" --filter-name "QD2" \
      	--filter-expression "FS > 60.0" --filter-name "FS60" \
      	--filter-expression "SOR > 3.0" --filter-name "SOR3" \
@@ -77,17 +79,27 @@ gatk VariantFiltration \
 #Subsetting
 gatk SelectVariants \
      	-R ${ref} \
-     	-V ${intermediate_VCF}.vcf.gz \
-     	-O ${intermediate_VCF2}.vcf.gz \
+     	-V ${intermediate_VCF} \
+     	-O ${intermediate_VCF2} \
      	--exclude-filtered true \
      	--exclude-non-variants
 
 # Remove masked regions
-bcftools view -O z -o ${output_BCF}.bcf.gz -R ${maked_regions} \
-	${intermediate_VCF2}.vcf.gz
+bcftools view -O z -o ${intermediate_VCF3} -R ${maked_regions} \
+	${intermediate_VCF2}
+	
+# Filter for read depth
+gatk VariantFiltration \
+        -V ${intermediate_VCF3} \
+        -G-filter "DP > ${high_cutoff}" \
+        -G-filter-name 'GDPhigh' \
+        -G-filter "DP < ${low_cutoff}" \
+        -G-filter-name 'GDPlow' \
+        -O  ${output} \
+        --set-filtered-genotype-to-no-call true
    
 `````
-* Output: Filtered BCF with masked regions removed.
+* Output: Filtered VCF (GATK and read-depth) with masked regions removed.
 
-**NOTE**: when filtering for sequencing depth, the haploid individual's lower cutoff has to be at least halved in the sexual chromosome only (e.g. males XY in human, females ZW in birds) 
+**IMPORTANT**: when filtering for sequencing depth, the haploid individual's lower cutoff (```${low_cutoff}```) has to be at least halved in the sexual chromosome only (e.g. males XY in human, females ZW in birds). For instance, 2.0 for female birds (ZW) and 5.0 for male birds (ZZ). 
 
