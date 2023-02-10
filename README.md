@@ -1,14 +1,14 @@
-# Determining-PAR-regions-in-sexual-chromosomes
+# Identifying-PAR-regions-in-sexual-chromosomes
 
 Author: Sonia Sarmiento
 
-### Description: This repository aims at defining PAR and non-PAR regions of sexual chromosomes. 
+### Description: This repository aims at defining PAR and non-PAR regions of sexual chromosomes for diploid species. 
 
 #### Coding: I used mainly a HPC cluster with bash scripts and R code at the end for analysis and plotting.
 
 ## Introduction
 Welcome to my repository for identifying PAR (Pseudoautosomal Regions) and non-PAR regions of sexual chromosomes!
-Sexual chromosomes determine biological sex of an organisms (e.g. in mammals X and Y chromosomes). In many species, sexual chromosomes are differente in size and gene content. However, there are regions of homology between the X and Y chromosomes known as PAR, where, accordingly, genes are present on both X and Y chromosomes. This repository aims to provide tools and algorithms for identifying PAR regions in the sexual chromosomes. I developed this code in order to phase and obtain an accurate reference panel that I used for imputation. However, identifying PAR regions can also be used for instance to help understand sexual chromosome divergence and to distinguish between X-linked and Y-linked genes in medial genetics. 
+In diploid species, sexual chromosomes are typically different in size and gene content. However, there are regions of homology between the heterozygote sexual chromosomes known as PAR, in which, accordingly, genes are present on both X and Y chromosomes. This repository aims to provide tools and algorithms for identifying PAR regions in the sexual chromosomes. I developed this code in order to phase and obtain an accurate reference panel that I used for imputation. However, identifying PAR regions can also be used for instance to help understand sexual chromosome divergence and to distinguish between X-linked and Y-linked genes in medial genetics. 
 
 The workflow includes SNP calling (both with and without ploidy), filtering steps and finally plotting sequencing depth distributions. 
 
@@ -127,8 +127,10 @@ After obtaining a VCF with read-depth information, we analyse this data in R. Th
 3) List of individuals to analyse
 
 * Script: ```1_Coverage_Analysis.R```
+This script divides each SNP position for each individual by the specific-coverage of the individual (for the whole genome). 
 
 * Output: Distribution plots of sequencing depth (sexual chr) / coverage (whole genome) per SNP and individual.
 
-This script divides each SNP position for each individual by the specific-coverage of the individual (for the whole genome). 
+On the one hand, I expect that the DIPLOID homozygous individual for the sexual chromosome present a distribution of around 1 (e.g.``` ```) . On the other hand, I expect that the distribution for the heterozygous individual follows a bimodal distribution between 0.5 and 1, corresponding to the non-PAR and PAR regions, accordingly. The non-PAR (haploid) region will be 0.5 when divided by the coverage of the whole genome because its haploid. 
+
 
