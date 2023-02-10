@@ -123,5 +123,11 @@ bcftools annotate -i 'TYPE="snp" && FORMAT/DP!="."' -x^FORMAT/DP -O z -o ${outpu
 After obtaining a VCF with read-depth information, we analyse this data in R. The R code provided was written to analyse two VCF (one per sex) separately but can also be modified to get information from one VCF with both female+male samples. 
 * Input:
 1) VCF (one per sex) with read-depth information per individual (column) and SNP (rows).
+2) Coverage of BAM file per individual (TXT file - col1=ind; col2=coverage, col3;sex (or one file per sex))
 
 * Script:
+
+* Output: Distribution plots of sequencing depth (sexual chr) / coverage (whole genome) per SNP and individual.
+
+This script divides each SNP position for each individual by the specific-coverage of the individual (for the whole genome). 
+
