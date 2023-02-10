@@ -124,6 +124,7 @@ After obtaining a VCF with read-depth information, we analyse this data in R. Th
 * Input:
 1) VCF (one per sex) with read-depth information per individual (column) and SNP (rows).
 2) Coverage of BAM file per individual (TXT file - col1=ind; col2=coverage, col3;sex (or one file per sex))
+3) List of individuals to analyse
 
 * Script:
 
