@@ -101,7 +101,25 @@ gatk VariantFiltration \
         --set-filtered-genotype-to-no-call true
    
 `````
-* Output: Filtered VCF (GATK and read-depth) with masked regions removed.
-
 **IMPORTANT**: when filtering for sequencing depth, the haploid individual's lower cutoff (```${low_cutoff}```) has to be at least halved in the sexual chromosome only (e.g. males XY in human, females ZW in birds). For instance, 2.0 for female birds (ZW) and 5.0 for male birds (ZZ). 
 
+* Output: Filtered VCF (GATK and read-depth) with masked regions removed. As the lower cutoff is different for females/males due to heterozygosity in sexual chromosomes, the last step is done separately for each sex and we obtain one VCF per sex. 
+
+
+### Step 4: Extracting read depth
+The PAR and non-PAR regions can be detected by differences in sequencing depth between regions in the sexual chromosome. To agilize further analysis, we extract only this information from the VCF. 
+* Input:
+1) ```${input_VCF}```  --> Filtered VCF (output of previous step)
+
+* Script:
+```bash
+bcftools annotate -i 'TYPE="snp" && FORMAT/DP!="."' -x^FORMAT/DP -O z -o ${output} ${input_VCF} 
+````
+* Output: Zipped VCF with read-depth per individual and SNP.
+
+### Step 5: Analyse read-depth information
+After obtaining a VCF with read-depth information, we analyse this data in R. The R code provided was written to analyse two VCF (one per sex) separately but can also be modified to get information from one VCF with both female+male samples. 
+* Input:
+1) VCF (one per sex) with read-depth information per individual (column) and SNP (rows).
+
+* Script:
