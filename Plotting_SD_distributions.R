@@ -5,6 +5,9 @@
 ###           females.                                 ###
 ##########################################################
 
+rm(list=ls())
+setwd('/Users/soniasarmiento/Downloads/BarnOwl')
+
 # Load library
 library(vcfR)
 library(tidyverse)
